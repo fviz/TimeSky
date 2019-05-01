@@ -21,11 +21,8 @@ public class MongoConnect {
 
         MongoClient client;
         MongoDatabase database;
-
         MongoCollection<Document> collection;
-
         ArrayList<City> cities;
-
         private final Main main;
 
         MongoPipe(Main mainReference) {

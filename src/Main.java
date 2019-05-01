@@ -3,14 +3,15 @@ import java.util.ArrayList;
 
 public class Main extends PApplet {
 
-    float minimumLatitude;
-    float minimumLongitude;
-    float maximumLatitude;
-    float maximumLongitude;
-
-    private ArrayList<City> cities = new ArrayList<>();
+    float minimumLatitude,  minimumLongitude, maximumLatitude, maximumLongitude;
+    private ArrayList<City> cities;
     private MongoConnect.MongoPipe mongoPipe;
     {
+        maximumLatitude = MIN_FLOAT;
+        maximumLongitude = MIN_FLOAT;
+        minimumLatitude = MAX_FLOAT;
+        minimumLongitude = MAX_FLOAT;
+        cities = new ArrayList<>();
         mongoPipe = new MongoConnect.MongoPipe(this);
     }
 
@@ -19,12 +20,6 @@ public class Main extends PApplet {
     }
 
     public void settings() {
-
-        maximumLatitude = MIN_FLOAT;
-        maximumLongitude = MIN_FLOAT;
-        minimumLatitude = MAX_FLOAT;
-        minimumLongitude = MAX_FLOAT;
-
         size(1000, 700);
         pixelDensity(2);
     }
