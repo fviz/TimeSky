@@ -14,6 +14,8 @@ import java.util.Map;
 
 import static processing.core.PApplet.max;
 import static processing.core.PApplet.min;
+import static processing.core.PConstants.MAX_INT;
+import static processing.core.PConstants.MIN_INT;
 
 public class MongoConnect {
 
@@ -77,7 +79,10 @@ public class MongoConnect {
 
         Block<Document> parseCities = new Block<Document>() {
             @Override public void apply(final Document document) {
-                City newCity = new City();
+                City newCity = new City(main);
+
+                int startYearParse = MAX_INT;
+                int endYearParse = MIN_INT;
 
                 // Read basic data from MongoDB
                 newCity.name = document.getString("name");
@@ -89,9 +94,18 @@ public class MongoConnect {
                 // Process years object
                 for (Map.Entry<String, Object> entry : years.entrySet()) {
 
-                    int[] parsedData = parseYear(entry);
-                    newCity.addYears(parsedData[0], parsedData[1]);
+                    int[] parsedYearData = parseYear(entry);
+                    newCity.addYears(parsedYearData[0], parsedYearData[1]);
+
+                    startYearParse = min(startYearParse, parsedYearData[0]);
+                    endYearParse = max(endYearParse, parsedYearData[0]);
                 }
+
+                newCity.startYear = startYearParse;
+                newCity.endYear = endYearParse;
+
+                main.startYear = min(main.startYear, newCity.startYear);
+                main.endYear = max(main.endYear, newCity.endYear);
 
                 main.minimumLatitude = min(main.minimumLatitude, newCity.latitude);
                 main.minimumLongitude = min(main.minimumLongitude, newCity.longitude);
