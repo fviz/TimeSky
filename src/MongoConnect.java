@@ -111,7 +111,8 @@ public class MongoConnect {
                 main.minimumLongitude = min(main.minimumLongitude, newCity.longitude);
                 main.maximumLatitude = max(main.maximumLatitude, newCity.latitude);
                 main.maximumLongitude = max(main.maximumLongitude, newCity.longitude);
-
+                newCity.calculatePosition();
+                newCity.createSpawnParticle();
                 cities.add(newCity);
 
             }
