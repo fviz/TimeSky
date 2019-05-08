@@ -12,6 +12,7 @@ public class Main extends PApplet {
     int endYear;
     float theta;
     PFont myFont;
+    Camera mainCamera;
 
     {
         maximumLatitude = MIN_FLOAT;
@@ -22,6 +23,7 @@ public class Main extends PApplet {
         endYear = MIN_INT;
         cities = new ArrayList<>();
         mongoPipe = new MongoConnect.MongoPipe(this);
+        mainCamera = new Camera();
         theta = (float) -1.5;
     }
 
@@ -30,7 +32,7 @@ public class Main extends PApplet {
     }
 
     public void settings() {
-        size(1000, 700, P2D);
+        size(1000, 700, P3D);
         pixelDensity(2);
     }
 
@@ -50,16 +52,26 @@ public class Main extends PApplet {
     }
 
     public void draw() {
+        // Camera control
+        pushMatrix();
+        translate(-mainCamera.position.x, -mainCamera.position.y, -mainCamera.position.z);
+        if (keyPressed) {
+            if (key == 'w') mainCamera.position.y -= 5;
+            if (key == 's') mainCamera.position.y += 5;
+            if (key == 'a') mainCamera.position.x -= 5;
+            if (key == 'd') mainCamera.position.x += 5;
+            if (key == 'z') mainCamera.position.z += 5;
+            if (key == 'x') mainCamera.position.z -= 5;
+
+        }
+        mainCamera.draw();
+
         frame.setTitle("fps: " + frameRate);
         background(0);
-        theta += 0.001;
+        theta += 0.005;
 
         float currentPosition = map(mouseX, 200, width - 200, -1000, endYear);
-        currentPosition = map(sin(theta), -1, 1, -200, endYear);
-
-        fill(255, 255);
-        textFont(myFont);
-        text("Current year: " + round(currentPosition), 40, 40);
+        currentPosition = map(sin(theta), -1, 1, -100, endYear);
 
         for (City currentCity : cities) {
 //            float x = map(
@@ -91,6 +103,15 @@ public class Main extends PApplet {
             currentCity.show(currentPosition);
 
         }
+        popMatrix();
+
+        fill(255, 255);
+        textFont(myFont);
+        text("Current year: " + round(currentPosition), 40, 40);
+    }
+
+    public void keyPressed() {
+
     }
 
 }

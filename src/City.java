@@ -31,7 +31,7 @@ class City {
 
     void show(float positionInput) {
         if (this.basicTimeline.spawn.position < positionInput) {
-            this.spawnParticle.fire();
+            this.spawnParticle.fire(this.basicTimeline.getValue(positionInput));
         }
     }
 
