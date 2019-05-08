@@ -29,6 +29,12 @@ class City {
         years = new ArrayList<>();
     }
 
+    void show(float positionInput) {
+        if (this.basicTimeline.spawn.position < positionInput) {
+            this.spawnParticle.fire();
+        }
+    }
+
     void addYears(int yearInput, int populationInput) {
         Year newYear = new Year(yearInput, populationInput);
         this.years.add(newYear);

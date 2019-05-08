@@ -9,6 +9,7 @@ class EventParticle {
     PVector acceleration;
     PVector opacity;
     boolean activated;
+    int timesFired;
 
     EventParticle(Main mainReference, PVector positionInput) {
         main = mainReference;
@@ -26,13 +27,18 @@ class EventParticle {
             activated = false;
             lifespan = 255;
             opacity = new PVector(255, 0);
+            timesFired++;
         }
     }
 
     void show() {
-// main.stroke(255);
-        main.fill(255, opacity.x);
-        main.ellipse(origin.x, origin.y, 8, 8);
+        main.noStroke();
+        main.fill(255);
+        main.ellipse(origin.x, origin.y, 4, 4);
+        if (timesFired < 1) {
+            main.fill(255, opacity.x);
+            main.ellipse(origin.x, origin.y, 16, 16);
+        }
     }
 
     void run() {

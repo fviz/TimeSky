@@ -87,10 +87,8 @@ public class Main extends PApplet {
 //                stroke(255);
 //            }
 //
-            if (currentCity.basicTimeline.spawn.position < currentPosition) {
-                currentCity.spawnParticle.fire();
-            }
 
+            currentCity.show(currentPosition);
 
         }
     }
